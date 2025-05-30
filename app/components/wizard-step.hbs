@@ -1,0 +1,16 @@
+<div class="flex justify-center w-screen h-screen bg-[url(/assets/images/swirl.png)] bg-center bg-repeat" ...attributes>
+  <div class="h-full w-full max-w-2xl flex flex-col justify-center">
+    <div class="flex items-center justify-center">
+      {{yield}}
+    </div>
+
+    <div class="mx-8 sm:mx-32 flex justify-between">
+      <LinkTo @route={{@previous}} class="text-white">
+        {{svg-jar "arrow-left-short" class="size-12"}}
+      </LinkTo>
+      <LinkTo @route={{@next}} class="text-white">
+        {{svg-jar "arrow-right-short" class="size-12"}}
+      </LinkTo>
+    </div>
+  </div>
+</div>

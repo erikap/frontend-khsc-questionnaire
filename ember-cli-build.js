@@ -11,7 +11,9 @@ module.exports = async function(defaults) {
   } = await import("@embroider/vite");
 
   const app = new EmberApp(defaults, {
-    // Add options here
+    svgJar: {
+      sourceDirs: ['node_modules/bootstrap-icons/icons'],
+    }
   });
 
   return compatBuild(app, buildOnce);

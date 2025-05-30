@@ -1,0 +1,15 @@
+<div class="w-screen h-screen overflow-hidden">
+  <img src="assets/images/cover.jpg" class="absolute inset-0 -z-10 size-full object-cover brightness-100">
+
+  <div class="my-6 flex items-center justify-center">
+    <h1 class="-ml-4 -rotate-6 text-7xl/24 md:text-8xl/36 font-headline font-bold text-center text-teal-300">
+      Ga je mee<br>naar Gerardmer?
+    </h1>
+  </div>
+
+  <LinkTo @route="intro" class="absolute inset-x-0 bottom-0 flex justify-center py-8">
+    <div class="text-teal-300 animate-bounce">
+      {{svg-jar "arrow-down-circle" class="h-16 w-16"}}
+    </div>
+  </LinkTo>
+</div>

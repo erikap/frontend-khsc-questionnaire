@@ -1,0 +1,103 @@
+<div class="flex justify-center w-screen min-h-screen bg-[url(/assets/images/swirl.png)] bg-center bg-repeat bg-teal-500 text-white">
+  <div class="h-full w-full max-w-2xl">
+    <div class="px-4 py-12">
+      <div class="-rotate-5 text-4xl font-headline text-center">
+        Interesse? *
+      </div>
+      <p class="mt-8 text-sm text-center">(*) Je antwoorden zijn niet bindend, maar geven ons een indicatie om de reis verder te kunnen organiseren.</p>
+      <div class="my-4 p-2 border-2 border-white rounded font-medium text-center">
+        <div>10 t.e.m. 15 juli 2027 naar Gerardmer (FR)</div>
+        <div>650&euro; volwassene half-pension</div>
+        <div>250&euro; kind vol-pension</div>
+      </div>
+      <form {{on "submit" this.submit}} class="mt-6 grid grid-cols-6 gap-y-6">
+        <div class="col-span-6 lg:col-span-4 lg:col-start-2">
+          <label for="name" class="block font-medium text-white">
+            Naam
+          </label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            aria-label="Name"
+            value={{this.name}}
+            class="mt-1 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-yellow-400 sm:text-sm/6"
+            {{on "input" this.setName}}
+            placeholder="Jan Janssens">
+        </div>
+        <fieldset aria-label="Ga je mee?" class="col-span-6">
+          <label for="will-you-join" class="flex justify-center font-medium text-white">
+            Heb je interesse om mee te gaan?
+          </label>
+          <div class="flex items-center justify-center">
+            <div class="mt-2 grid grid-cols-2 gap-6">
+              {{#each this.willJoinOptions as |option|}}
+                <label class="flex cursor-pointer items-center justify-center rounded-md px-3 py-3 text-sm font-semibold uppercase focus:outline-hidden sm:flex-1 {{if (eq this.willJoin option.value) "ring-0 bg-yellow-500 text-white hover:bg-yellow-400" "ring-1 ring-gray-300 bg-white text-gray-900 hover:bg-gray-50"}}">
+                  <input type="radio"
+                    name="will-you-join"
+                    value={{option.value}}
+                    checked={{eq this.willJoin option.value}}
+                    class="sr-only"
+                    {{on "change" this.setWillJoin}}>
+                  <span>{{option.label}}</span>
+                </label>
+              {{/each}}
+            </div>
+          </div>
+        </fieldset>
+       {{#if this.showForm}}
+          <div class="col-span-6 lg:col-span-4 lg:col-start-2">
+            <fieldset>
+              <legend class="font-semibold text-white mb-2">
+                Met hoeveel gaan jullie mee?
+              </legend>
+              {{#each this.personFields as |field|}}
+                <div class="flex items-center gap-4 mb-4">
+                  <input
+                    id={{field.attribute}}
+                    type="number"
+                    name={{field.attribute}}
+                    value={{get this field.attribute}}
+                    min=0
+                    class="block w-16 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-yellow-400 sm:text-sm/6"
+                  {{on "input" (fn this.setNumber field.attribute)}}>
+                  <label for={{field.attribute}} class="block font-medium text-white">
+                    {{{field.label}}}
+                  </label>
+                </div>
+              {{/each}}
+            </fieldset>
+          </div>
+        {{else if this.isNotInterested}}
+          <div class="col-span-6 lg:col-span-4 lg:col-start-2">
+            <label for="reason-not-interested" class="block font-medium text-white">
+              Hoe kunnen we je overtuigen om mee te gaan?
+            </label>
+            <textarea
+              id="reason-not-interested"
+              name="reason-not-interested"
+              rows="5"
+              value={{this.reasonNotInterested}}
+              class="mt-1 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-yellow-400 sm:text-sm/6"
+              {{on "input" this.setReasonNotInterested}}>
+            </textarea>
+          </div>
+        {{/if}}
+
+        {{#if this.isValid}}
+          <div class="col-span-6 lg:col-span-4 lg:col-start-2">
+            <button
+              type="submit"
+              class="w-full inline-flex justify-center rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-yellow-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400">
+              Verstuur
+            </button>
+          </div>
+        {{/if}}
+
+        <div class="col-span-6 text-center">
+          <LinkTo @route="cost" class="text-sm underline">Ga terug</LinkTo>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
