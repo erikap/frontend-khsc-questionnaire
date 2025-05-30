@@ -1,9 +1,12 @@
 import Controller from '@ember/controller';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { isPresent } from '@ember/utils';
 
 export default class FormController extends Controller {
+  @service store;
+
   willJoinOptions = [
     { label: 'Ja', value: 'yes' },
     { label: 'Nee', value: 'no' },
@@ -21,6 +24,7 @@ export default class FormController extends Controller {
   @tracked nbOfJeecee = 0;
   @tracked nbOfNotJeecee = 0;
   @tracked reasonNotInterested;
+  @tracked submission;
 
   get showForm() {
     return this.willJoin == "yes";
@@ -32,6 +36,14 @@ export default class FormController extends Controller {
 
   get isValid() {
     return isPresent(this.willJoin);
+  }
+
+  get isSubmitting() {
+    return this.submission && this.submission.isNew;
+  }
+
+  get isSubmitted() {
+    return this.submission?.id;
   }
 
   @action
@@ -55,8 +67,20 @@ export default class FormController extends Controller {
   }
 
   @action
-  submit(event) {
+  async submit(event) {
     event.preventDefault();
-    console.log('must submit form to backend now');
+
+    const attributes = this.isNotInterested
+      ? { reasonNotInterested: this.reasonNotInterested }
+      : { numberOfAdults: this.nbOfAdults, numberOfJeecee: this.nbOfJeecee, numberOfNotJeecee: this.nbOfNotJeecee };
+
+    this.submission = this.store.createRecord('submission', {
+      name: this.name,
+      created: new Date(),
+      isInterested: this.willJoin,
+      ...attributes
+    });
+
+    await this.submission.save();
   }
 }

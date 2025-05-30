@@ -9,4 +9,12 @@ export default defineConfig({
     babelHelpers: 'runtime',
     extensions,
   }), tailwindcss()],
+  server: {
+    proxy: {
+      '/submissions': {
+        target: 'http://host',
+        changeOrigin: true,
+      },
+    },
+  },
 });
