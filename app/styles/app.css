@@ -2,10 +2,10 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: "Feeling Passionate";
-    src: url('/assets/fonts/feeling-passionate-regular.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Feeling Passionate";
+  src: url("/assets/fonts/feeling-passionate-regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @theme {
